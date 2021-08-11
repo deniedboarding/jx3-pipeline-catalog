@@ -1,0 +1,23 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  creationTimestamp: null
+  name: create-release-branch
+spec:
+  steps:
+  - image: ghcr.io/jenkins-x/jx-release-version:2.4.13
+    name: create-release-branch
+    script: |
+      #!/usr/bin/env bash
+      #source .jx/variables.sh
+      NEW_VERSION=$(jx release version -next-version increment:minor)
+      RELEASE_BRANCH=release-$NEW_VERSION
+      git checkout -b $RELEASE_BRANCH
+      git commit --allow-empty -m "Creating release branch for version $NEW_VERSION"
+      git push --set-upstream origin $RELEASE_BRANCH
+    resources: {}
+    workingDir: /workspace/source
+  workspaces:
+  - description: The git repo will be cloned onto the volume backing this workspace
+    mountPath: /workspace
+    name: output
