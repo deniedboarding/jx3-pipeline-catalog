@@ -22,7 +22,7 @@ spec:
     script: |
       #!/usr/bin/env sh
       kubectl get env dev -o go-template='{{range .spec.teamSettings.storageLocations}}{{if eq .classifier "repository"}}{{.bucketUrl}}{{end}}{{end}}' > repository_bucket
-  - image: public.ecr.aws/bitnami/aws-cli:2
+  - image: bitnamilegacy/aws-cli:2
     name: unstash
     securityContext:
       runAsUser: 0

@@ -53,7 +53,7 @@ spec:
       # https://github.com/seahen/maven-s3-wagon
 
       ./gradlew test
-  - image: public.ecr.aws/bitnami/aws-cli:2
+  - image: bitnamilegacy/aws-cli:2
     securityContext:
       runAsUser: 0
     name: download-test-history
@@ -95,7 +95,7 @@ spec:
       }
       end
       allure generate $TEST_RESULT_DIR -o $REPORT_DIR
-  - image: public.ecr.aws/bitnami/aws-cli:2
+  - image: bitnamilegacy/aws-cli:2
     securityContext:
       runAsUser: 0
     name: upload-report

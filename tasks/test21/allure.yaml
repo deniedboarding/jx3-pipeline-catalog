@@ -11,7 +11,7 @@ spec:
   steps:
   - image: maven:3.9-eclipse-temurin-21
     name: integration-test
-    resources:   
+    resources:
       limits: {}
       requests:
         cpu: 1500m
@@ -63,7 +63,7 @@ spec:
 
       mvn --no-snapshot-updates --no-transfer-progress -Dmaven.test.failure.ignore=false -DskipUnitTests=true -Dbrowser=remote \
          -DjenkinsBuild=${BUILD_NUMBER} -DthreadCount=20 -DparallelTestsTimeoutInSeconds=540 -DreuseForks=true -DquickTest=true -DtraceExporter=otlp verify || echo There are integration test failures
-  - image: public.ecr.aws/bitnami/aws-cli:2
+  - image: bitnamilegacy/aws-cli:2
     securityContext:
       runAsUser: 0
     name: download-test-history
@@ -98,7 +98,7 @@ spec:
       }
       end
       allure generate $TEST_RESULT_DIR -o $REPORT_DIR
-  - image: public.ecr.aws/bitnami/aws-cli:2
+  - image: bitnamilegacy/aws-cli:2
     securityContext:
       runAsUser: 0
     name: upload-report
